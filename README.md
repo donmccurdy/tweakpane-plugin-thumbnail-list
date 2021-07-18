@@ -20,7 +20,7 @@
 ### Package
 ```js
 import { Pane } from 'tweakpane';
-import * as TweakpaneThumbnailListPlugin from 'tweakpane-thumbnail-list';
+import * as TweakpaneThumbnailListPlugin from 'tweakpane-plugin-thumbnail-list';
 
 const pane = new Pane();
 pane.registerPlugin(TweakpaneThumbnailListPlugin);
