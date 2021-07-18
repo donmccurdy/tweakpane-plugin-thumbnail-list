@@ -2,8 +2,9 @@
 
 [Tweakpane][tweakpane] plugin for selecting from a thumbnail list.
 
-## Installation
+> **NOTICE:** _IN DEVELOPMENT_. Not yet ready for use.
 
+## Installation
 
 ### Browser
 ```html
@@ -29,12 +30,17 @@ pane.registerPlugin(TweakpaneThumbnailListPlugin);
 ## Usage
 ```js
 const params = {
-  prop: 3,
+  weave: 'plain',
 };
 
-// TODO: Update parameters for your plugin
-pane.addInput(params, 'prop', {
-  view: 'dots',
+pane.addInput(params, 'weave', {
+  view: 'thumbnail-list',
+  options: [
+    {value: 'plain', src: './plain.png'},
+    {value: 'twill', src: './twill.png'},
+    {value: 'basket', src: './basket.png'},
+    {value: 'herringbone', src: './herringbone.png'},
+  ]
 }).on('change', (ev) => {
   console.log(ev.value);
 });
