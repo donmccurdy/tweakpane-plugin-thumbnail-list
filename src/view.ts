@@ -20,6 +20,8 @@ export class PluginView implements View {
 	private rowEls_: HTMLElement[] = [];
 
 	constructor(doc: Document, config: Config) {
+		this.onSelect_ = this.onSelect_.bind(this);
+
 		// Create a root element for the plugin
 		this.element = doc.createElement('div');
 		this.element.classList.add(className());
@@ -33,48 +35,68 @@ export class PluginView implements View {
 
 		this.element.style.overflowY = 'auto';
 
-		// Apply the initial value
+		this.init_();
 		this.refresh_();
 
 		config.viewProps.handleDispose(() => {
-			// Called when the view is disposing
-			console.log('TODO: dispose view');
+			let rowEl;
+			while ((rowEl = this.rowEls_.pop())) {
+				rowEl.removeEventListener('click', this.onSelect_);
+				this.element.removeChild(rowEl);
+			}
 		});
 	}
 
-	private refresh_(): void {
+	private init_(): void {
 		const doc = this.element.ownerDocument;
-		const rawValue = this.value_.rawValue;
-
-		while (this.rowEls_.length > 0) {
-			const el = this.rowEls_.pop();
-			if (el) this.element.removeChild(el);
-		}
-
 		for (const thumbnail of this.valueOptions_) {
 			const thumbEl = doc.createElement('div');
 			thumbEl.classList.add(className('img'));
-			thumbEl.style.width = '24px';
-			thumbEl.style.height = '24px';
-			thumbEl.style.backgroundColor = '#CCC';
+			thumbEl.style.backgroundImage = `url(${thumbnail.src})`;
 
 			const labelEl = doc.createElement('span');
 			labelEl.classList.add(className('lbl'));
-			labelEl.textContent =
-				rawValue.value === thumbnail.value
-					? `${thumbnail.value} (SELECTED)`
-					: thumbnail.value;
+			labelEl.textContent = thumbnail.value;
 
 			const rowEl = doc.createElement('div');
 			rowEl.classList.add(className('row'));
-			rowEl.style.display = 'flex';
-			rowEl.style.flexDirection = 'row';
 			rowEl.appendChild(thumbEl);
 			rowEl.appendChild(labelEl);
+			rowEl.setAttribute('data-value', thumbnail.value);
+			rowEl.addEventListener('click', this.onSelect_);
 
 			this.rowEls_.push(rowEl);
 			this.element.appendChild(rowEl);
 		}
+	}
+
+	private refresh_(): void {
+		const value = this.value_.rawValue.value;
+		for (const rowEl of this.rowEls_) {
+			if (rowEl.getAttribute('data-value') === value) {
+				rowEl.setAttribute('data-selected', '');
+			} else {
+				rowEl.removeAttribute('data-selected');
+			}
+		}
+	}
+
+	private onSelect_(event: MouseEvent) {
+		const rowEl = this.findRow_(event.target as HTMLElement);
+		const value = rowEl.getAttribute('data-value');
+		const thumbnail = this.valueOptions_.find(
+			(option) => option.value === value,
+		);
+		if (!thumbnail) return;
+		this.value_.setRawValue(thumbnail);
+	}
+
+	private findRow_(el: HTMLElement | null): HTMLElement {
+		while (el && !el.hasAttribute('data-value')) {
+			el = el.parentElement;
+		}
+		if (!el) throw new Error('Invalid DOM scope');
+		return el;
 	}
 
 	private onValueChange_() {

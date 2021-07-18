@@ -18,12 +18,15 @@
 		pane.addInput(params, 'image', {
 			view: 'thumbnail-list',
 			options: [
-				{value: 'a', src: 'https://img.io/a'},
-				{value: 'b', src: 'https://img.io/b'},
-				{value: 'c', src: 'https://img.io/c'},
+				{value: '0001', src: 'https://picsum.photos/200?v=0001'},
+				{value: '0002', src: 'https://picsum.photos/200?v=0002'},
+				{value: '0003', src: 'https://picsum.photos/200?v=0003'},
+				{value: '0004', src: 'https://picsum.photos/200?v=0004'},
+				{value: '0005', src: 'https://picsum.photos/200?v=0005'},
+				{value: '0006', src: 'https://picsum.photos/200?v=0006'},
 			],
 		}).on('change', (ev) => {
-			console.log(ev.value);
+			document.body.style.backgroundImage = `url(${ev.value.src})`;
 		});
 
 		window.pane = pane;

@@ -10,10 +10,9 @@ import {
 import {PluginController, Thumbnail} from './controller';
 
 interface PluginInputParams extends BaseInputParams {
-	options: Thumbnail[];
-	maxWidth?: number;
-	maxHeight?: number;
 	view: 'thumbnail-list';
+	options: Thumbnail[];
+	thumbSize?: number;
 }
 
 // NOTE: You can see JSDoc comments of `InputBindingPlugin` for details about each property
@@ -45,8 +44,7 @@ export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
 					src: p.required.string,
 				}),
 			),
-			maxHeight: p.optional.number,
-			maxWidth: p.optional.number,
+			thumbSize: p.optional.number,
 		});
 		if (!result) return null;
 
