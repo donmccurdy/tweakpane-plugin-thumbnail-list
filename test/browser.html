@@ -6,14 +6,14 @@
 </head>
 <body>
 	<script src="../node_modules/tweakpane/dist/tweakpane.js"></script>
-	<script src="../dist/tweakpane-plugin-template.js"></script>
+	<script src="../dist/tweakpane-plugin-thumbnail-list.js"></script>
 	<script>
 		const params = {
 			image: 'value1',
 		};
 
 		const pane = new Tweakpane.Pane();
-		pane.registerPlugin(TweakpaneTemplatePlugin);
+		pane.registerPlugin(TweakpaneThumbnailListPlugin);
 
 		pane.addInput(params, 'image', {
 			view: 'thumbnail-list',

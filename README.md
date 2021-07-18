@@ -2,36 +2,6 @@
 
 [Tweakpane][tweakpane] plugin for selecting from a thumbnail list.
 
-
-## Quick start
-- Install dependencies:
-  ```
-  % npm install
-  ```
-- Build source codes and watch changes:
-  ```
-  % npm start
-  ```
-- Open `test/browser.html` to see the result.
-
-
-## File structure
-```
-|- src
-|  |- sass ............ Plugin CSS
-|  |- index.ts ........ Entrypoint
-|  |- plugin.ts ....... Plugin
-|  |- controller.ts ... Controller for the custom view
-|  `- view.ts ......... Custom view
-|- dist ............... Compiled files
-`- test
-   `- browser.html .... Plugin labo
-```
-
-
-# For plugin users
-
-
 ## Installation
 
 
@@ -68,6 +38,33 @@ pane.addInput(params, 'prop', {
 }).on('change', (ev) => {
   console.log(ev.value);
 });
+```
+
+## Contributing
+
+### Quick start
+- Install dependencies:
+  ```
+  % npm install
+  ```
+- Build source codes and watch changes:
+  ```
+  % npm start
+  ```
+- Open `test/browser.html` to see the result.
+
+
+### File structure
+```
+|- src
+|  |- sass ............ Plugin CSS
+|  |- index.ts ........ Entrypoint
+|  |- plugin.ts ....... Plugin
+|  |- controller.ts ... Controller for the custom view
+|  `- view.ts ......... Custom view
+|- dist ............... Compiled files
+`- test
+   `- browser.html .... Plugin labo
 ```
 
 

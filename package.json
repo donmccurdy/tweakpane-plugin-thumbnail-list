@@ -1,12 +1,15 @@
 {
-  "name": "tweakpane-plugin-template",
+  "name": "tweakpane-plugin-thumbnail-list",
   "version": "0.0.0",
-  "description": "Plugin template for Tweakpane",
-  "main": "dist/tweakpane-plugin-template.js",
-  "author": "cocopon",
+  "description": "Tweakpane plugin for image thumbnail selection",
+  "main": "dist/tweakpane-plugin-thumbnail-list.js",
+  "author": "Don McCurdy <dm@donmccurdy.com>",
   "license": "MIT",
   "files": [
-    "dist"
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE.txt"
   ],
   "scripts": {
     "prepare": "run-s clean build",
