@@ -12,16 +12,16 @@ import {PluginController, Thumbnail} from './controller';
 interface PluginInputParams extends BaseInputParams {
 	view: 'thumbnail-list';
 	options: Thumbnail[];
-	thumbSize?: number;
 }
 
-// NOTE: You can see JSDoc comments of `InputBindingPlugin` for details about each property
-//
-// `InputBindingPlugin<In, Ex, P>` means...
-// - The plugin receives the bound value as `Ex`,
-// - converts `Ex` into `In` and holds it
-// - P is the type of the parsed parameters
-//
+/**
+ * Thumbnail List Plugin
+ *
+ * `InputBindingPlugin<In, Ex, P>` means...
+ * - The plugin receives the bound value as `Ex`,
+ * - converts `Ex` into `In` and holds it
+ * - P is the type of the parsed parameters
+ */
 export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
 	Thumbnail,
 	string,
@@ -35,7 +35,6 @@ export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
 		if (typeof exValue !== 'string') return null;
 
 		const p = ParamsParsers;
-		// const thumbnailParser = parseParams<Thumbnail>()
 		const result = parseParams<PluginInputParams>(params, {
 			view: p.required.constant('thumbnail-list'),
 			options: p.required.array(
@@ -44,11 +43,10 @@ export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
 					src: p.required.string,
 				}),
 			),
-			thumbSize: p.optional.number,
 		});
+
 		if (!result) return null;
 
-		// Return a typed value and params to accept the user input
 		return {
 			initialValue: exValue,
 			params: result,
@@ -56,9 +54,9 @@ export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
 	},
 
 	binding: {
+		/** Converts an external unknown value into the internal value. */
 		reader(_args) {
 			return (exValue: unknown): Thumbnail => {
-				// Convert an external unknown value into the internal value
 				return (
 					_args.params.options.find((option) => option.value === exValue) ||
 					_args.params.options[0]
@@ -66,33 +64,23 @@ export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
 			};
 		},
 
+		/** Creates a value constraint from the user input. */
 		constraint(_args) {
-			// Create a value constraint from the user input
-			// const constraints: Constraint<Thumbnail>[] = [];
-			// You can reuse existing functions of the default plugins
-			// const cr = createRangeConstraint(args.params);
-			// if (cr) {
-			// 	constraints.push(cr);
-			// }
-			// const cs = createStepConstraint(args.params);
-			// if (cs) {
-			// 	constraints.push(cs);
-			// }
-			// Use `CompositeConstraint` to combine multiple constraints
 			return new CompositeConstraint([]);
 		},
 
+		/**
+		 * Use `target.write()` to write the primitive value to the target,
+		 * or `target.writeProperty()` to write a property of the target.
+		 */
 		writer(_args) {
 			return (target: BindingTarget, inValue) => {
-				// Use `target.write()` to write the primitive value to the target,
-				// or `target.writeProperty()` to write a property of the target
 				target.write(inValue);
 			};
 		},
 	},
 
 	controller(args) {
-		// Create a controller for the plugin
 		return new PluginController(args.document, {
 			value: args.value,
 			valueOptions: args.params.options,

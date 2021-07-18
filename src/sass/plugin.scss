@@ -19,9 +19,10 @@
 	&_row {
 		display: flex;
 		flex-direction: row;
+		height: var(--tp-plugin-thumbnail-list-size, var(--bld-us));
+		padding: var(--tp-container-vertical-padding, 4px) 0;
 		color: var(--in-fg);
 		font-size: 0.9em;
-		line-height: 0.9;
 		opacity: 0.75;
 
 		&[data-selected] {
@@ -36,14 +37,16 @@
 	}
 
 	&_img {
+		width: var(--tp-plugin-thumbnail-list-size, var(--bld-us));
+		height: 100%;
+		border-radius: var(--tp-element-border-radius, 2px);
 		margin-right: 0.5em;
 		background-size: contain;
-		height: 24px;
-		width: 24px;
 	}
 
 	&_lbl {
+		height: var(--tp-plugin-thumbnail-list-size, var(--bld-us));
+		line-height: var(--tp-plugin-thumbnail-list-size, var(--bld-us));
 		text-overflow: ellipsis;
-		line-height: 24px;
 	}
 }

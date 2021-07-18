@@ -46,6 +46,16 @@ pane.addInput(params, 'weave', {
 });
 ```
 
+## CSS Theming
+
+Inherits CSS variables from [Tweakpane's theming system](https://cocopon.github.io/tweakpane/theming.html), with the following additions:
+
+```css
+:root {
+  --tp-plugin-thumbnail-list-size: 20px;
+}
+```
+
 ## Contributing
 
 ### Quick start

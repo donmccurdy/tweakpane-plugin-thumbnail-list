@@ -3,6 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title></title>
+	<style>
+		body {
+			--tp-plugin-thumbnail-list-size: 30px;
+		}
+	</style>
 </head>
 <body>
 	<script src="../node_modules/tweakpane/dist/tweakpane.js"></script>
@@ -18,12 +23,12 @@
 		pane.addInput(params, 'image', {
 			view: 'thumbnail-list',
 			options: [
-				{value: '0001', src: 'https://picsum.photos/200?v=0001'},
-				{value: '0002', src: 'https://picsum.photos/200?v=0002'},
-				{value: '0003', src: 'https://picsum.photos/200?v=0003'},
-				{value: '0004', src: 'https://picsum.photos/200?v=0004'},
-				{value: '0005', src: 'https://picsum.photos/200?v=0005'},
-				{value: '0006', src: 'https://picsum.photos/200?v=0006'},
+				{value: 'Item #1', src: 'https://picsum.photos/200?v=0001'},
+				{value: 'Item #2', src: 'https://picsum.photos/200?v=0002'},
+				{value: 'Item #3', src: 'https://picsum.photos/200?v=0003'},
+				{value: 'Item #4', src: 'https://picsum.photos/200?v=0004'},
+				{value: 'Item #5', src: 'https://picsum.photos/200?v=0005'},
+				{value: 'Item #6', src: 'https://picsum.photos/200?v=0006'},
 			],
 		}).on('change', (ev) => {
 			document.body.style.backgroundImage = `url(${ev.value.src})`;

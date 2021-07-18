@@ -28,10 +28,9 @@ export class PluginView implements View {
 		// Bind view props to the element
 		config.viewProps.bindClassModifiers(this.element);
 
-		// Receive the bound value from the controller
 		this.value_ = config.value;
-		this.valueOptions_ = config.valueOptions;
 		this.value_.emitter.on('change', this.onValueChange_.bind(this));
+		this.valueOptions_ = config.valueOptions;
 
 		this.element.style.overflowY = 'auto';
 
