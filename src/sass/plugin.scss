@@ -2,14 +2,14 @@
 @import '../../node_modules/@tweakpane/core/lib/sass/plugin';
 
 // Additional style for the plugin
-.#{$prefix}-tmpv {
+.#{$prefix}-thumbv {
 	// Extend a general input view style
 	@extend %input;
 
 	cursor: pointer;
-	display: grid;
-	grid-template-columns: repeat(10, 1fr);
-	grid-template-rows: repeat(auto-fit, 10px);
+	// display: grid;
+	// grid-template-columns: repeat(10, 1fr);
+	// grid-template-rows: repeat(auto-fit, 10px);
 	height: calc(var(--bld-us) * 3);
 	overflow: hidden;
 	position: relative;
@@ -18,44 +18,58 @@
 		opacity: 0.5;
 	}
 
-	&_text {
+	&_row {
 		// You can use CSS variables for styling. See declarations for details:
 		// ../../node_modules/@tweakpane/core/lib/sass/common/_defs.scss
 		color: var(--in-fg);
 
-		bottom: 2px;
+		// bottom: 2px;
 		font-size: 0.9em;
 		line-height: 0.9;
-		opacity: 0.5;
-		position: absolute;
-		right: 2px;
-	}
-	&_dot {
-		height: 10px;
-		line-height: 10px;
-		position: relative;
-		text-align: center;
+		opacity: 0.75;
+		// position: absolute;
+		// right: 2px;
 
-		&::before {
-			background-color: var(--in-fg);
-			content: '';
-			border-radius: 1px;
-			height: 2px;
-			left: 50%;
-			margin-left: -1px;
-			margin-top: -1px;
-			position: absolute;
-			top: 50%;
-			width: 2px;
+		&:hover {
+			opacity: 1.0;
 		}
 	}
-	&_frac {
-		background-color: var(--in-fg);
-		border-radius: 1px;
-		height: 2px;
-		left: 50%;
-		margin-top: -1px;
-		position: absolute;
-		top: 50%;
+
+	&_img {
+		margin-right: 0.5em;
 	}
+
+	&_lbl {
+		text-overflow: ellipsis;
+		line-height: 24px;
+	}
+
+	// &_dot {
+	// 	height: 10px;
+	// 	line-height: 10px;
+	// 	position: relative;
+	// 	text-align: center;
+
+	// 	&::before {
+	// 		background-color: var(--in-fg);
+	// 		content: '';
+	// 		border-radius: 1px;
+	// 		height: 2px;
+	// 		left: 50%;
+	// 		margin-left: -1px;
+	// 		margin-top: -1px;
+	// 		position: absolute;
+	// 		top: 50%;
+	// 		width: 2px;
+	// 	}
+	// }
+	// &_frac {
+	// 	background-color: var(--in-fg);
+	// 	border-radius: 1px;
+	// 	height: 2px;
+	// 	left: 50%;
+	// 	margin-top: -1px;
+	// 	position: absolute;
+	// 	top: 50%;
+	// }
 }

@@ -1,4 +1,4 @@
-import {TemplateInputPlugin} from './plugin';
+import {TweakpaneThumbnailListPlugin} from './plugin';
 
 // Export your plugin as constant `plugin`
-export const plugin = TemplateInputPlugin;
+export const plugin = TweakpaneThumbnailListPlugin;

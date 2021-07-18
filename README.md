@@ -1,9 +1,6 @@
-# Tweakpane plugin template
-Plugin template of an input binding for [Tweakpane][tweakpane].
+# Tweakpane thumbnail list plugin
 
-
-# For plugin developers
-TODO: Delete this section before publishing your plugin.
+[Tweakpane][tweakpane] plugin for selecting from a thumbnail list.
 
 
 ## Quick start
@@ -41,21 +38,21 @@ TODO: Delete this section before publishing your plugin.
 ### Browser
 ```html
 <script src="tweakpane.min.js"></script>
-<scirpt src="tweakpane-plugin-template.min.js"></script>
+<script src="tweakpane-plugin-thumbnail-list.min.js"></script>
 <script>
   const pane = new Tweakpane.Pane();
-  pane.registerPlugin(TweakpaneTemplatePlugin);
+  pane.registerPlugin(TweakpaneThumbnailListPlugin);
 </script>
 ```
 
 
 ### Package
 ```js
-import {Pane} from 'tweakpane';
-import * as TemplatePlugin from 'tweakpane-plugin-template';
+import { Pane } from 'tweakpane';
+import * as TweakpaneThumbnailListPlugin from 'tweakpane-thumbnail-list';
 
 const pane = new Pane();
-pane.registerPlugin(TemplatePlugin);
+pane.registerPlugin(TweakpaneThumbnailListPlugin);
 ```
 
 

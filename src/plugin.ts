@@ -2,20 +2,18 @@ import {
 	BaseInputParams,
 	BindingTarget,
 	CompositeConstraint,
-	createRangeConstraint,
-	createStepConstraint,
 	InputBindingPlugin,
 	ParamsParsers,
 	parseParams,
 } from '@tweakpane/core';
 
-import {PluginController} from './controller';
+import {PluginController, Thumbnail} from './controller';
 
 interface PluginInputParams extends BaseInputParams {
-	max?: number;
-	min?: number;
-	step?: number;
-	view: 'dots';
+	options: Thumbnail[];
+	maxWidth?: number;
+	maxHeight?: number;
+	view: 'thumbnail-list';
 }
 
 // NOTE: You can see JSDoc comments of `InputBindingPlugin` for details about each property
@@ -25,41 +23,32 @@ interface PluginInputParams extends BaseInputParams {
 // - converts `Ex` into `In` and holds it
 // - P is the type of the parsed parameters
 //
-export const TemplateInputPlugin: InputBindingPlugin<
-	number,
-	number,
+export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
+	Thumbnail,
+	string,
 	PluginInputParams
 > = {
-	id: 'input-template',
-
-	// type: The plugin type.
-	// - 'input': Input binding
-	// - 'monitor': Monitor binding
+	id: 'thumbnail-list',
 	type: 'input',
-
-	// This plugin template injects a compiled CSS by @rollup/plugin-replace
-	// See rollup.config.js for details
 	css: '__css__',
 
 	accept(exValue: unknown, params: Record<string, unknown>) {
-		if (typeof exValue !== 'number') {
-			// Return null to deny the user input
-			return null;
-		}
+		if (typeof exValue !== 'string') return null;
 
-		// Parse parameters object
 		const p = ParamsParsers;
+		// const thumbnailParser = parseParams<Thumbnail>()
 		const result = parseParams<PluginInputParams>(params, {
-			// `view` option may be useful to provide a custom control for primitive values
-			view: p.required.constant('dots'),
-
-			max: p.optional.number,
-			min: p.optional.number,
-			step: p.optional.number,
+			view: p.required.constant('thumbnail-list'),
+			options: p.required.array(
+				p.required.object({
+					value: p.required.string,
+					src: p.required.string,
+				}),
+			),
+			maxHeight: p.optional.number,
+			maxWidth: p.optional.number,
 		});
-		if (!result) {
-			return null;
-		}
+		if (!result) return null;
 
 		// Return a typed value and params to accept the user input
 		return {
@@ -70,26 +59,29 @@ export const TemplateInputPlugin: InputBindingPlugin<
 
 	binding: {
 		reader(_args) {
-			return (exValue: unknown): number => {
+			return (exValue: unknown): Thumbnail => {
 				// Convert an external unknown value into the internal value
-				return typeof exValue === 'number' ? exValue : 0;
+				return (
+					_args.params.options.find((option) => option.value === exValue) ||
+					_args.params.options[0]
+				);
 			};
 		},
 
-		constraint(args) {
+		constraint(_args) {
 			// Create a value constraint from the user input
-			const constraints = [];
+			// const constraints: Constraint<Thumbnail>[] = [];
 			// You can reuse existing functions of the default plugins
-			const cr = createRangeConstraint(args.params);
-			if (cr) {
-				constraints.push(cr);
-			}
-			const cs = createStepConstraint(args.params);
-			if (cs) {
-				constraints.push(cs);
-			}
+			// const cr = createRangeConstraint(args.params);
+			// if (cr) {
+			// 	constraints.push(cr);
+			// }
+			// const cs = createStepConstraint(args.params);
+			// if (cs) {
+			// 	constraints.push(cs);
+			// }
 			// Use `CompositeConstraint` to combine multiple constraints
-			return new CompositeConstraint(constraints);
+			return new CompositeConstraint([]);
 		},
 
 		writer(_args) {
@@ -105,6 +97,7 @@ export const TemplateInputPlugin: InputBindingPlugin<
 		// Create a controller for the plugin
 		return new PluginController(args.document, {
 			value: args.value,
+			valueOptions: args.params.options,
 			viewProps: args.viewProps,
 		});
 	},

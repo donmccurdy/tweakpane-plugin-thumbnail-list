@@ -9,16 +9,19 @@
 	<script src="../dist/tweakpane-plugin-template.js"></script>
 	<script>
 		const params = {
-			prop: 3,
+			image: 'value1',
 		};
-		const pane = new Tweakpane.Pane();
 
-		// Register plugin
+		const pane = new Tweakpane.Pane();
 		pane.registerPlugin(TweakpaneTemplatePlugin);
 
-		// TODO: Update parameters for your plugin
-		pane.addInput(params, 'prop', {
-			view: 'dots',
+		pane.addInput(params, 'image', {
+			view: 'thumbnail-list',
+			options: [
+				{value: 'a', src: 'https://img.io/a'},
+				{value: 'b', src: 'https://img.io/b'},
+				{value: 'c', src: 'https://img.io/c'},
+			],
 		}).on('change', (ev) => {
 			console.log(ev.value);
 		});
