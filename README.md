@@ -4,7 +4,7 @@
 
 > **NOTICE:** _IN DEVELOPMENT_. Not yet ready for use.
 
-![Preview](./assets/preview.png)
+![Preview](https://github.com/donmccurdy/tweakpane-plugin-thumbnail-list/raw/main/assets/preview.png)
 
 ## Installation
 
