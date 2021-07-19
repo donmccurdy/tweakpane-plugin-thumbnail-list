@@ -5,6 +5,7 @@
 	<title></title>
 	<style>
 		body {
+			background-size: cover;
 			--tp-plugin-thumbnail-list-height: 500px;
 			--tp-plugin-thumbnail-list-width: 200px;
 			--tp-plugin-thumbnail-list-thumb-size: 30px;
@@ -29,12 +30,12 @@
 		pane.addInput(params, 'image', {
 			view: 'thumbnail-list',
 			options: [
-				{value: 'Item #1', src: 'https://picsum.photos/200?v=0001'},
-				{value: 'Item #2', src: 'https://picsum.photos/200?v=0002'},
-				{value: 'Item #3', src: 'https://picsum.photos/200?v=0003'},
-				{value: 'Item #4', src: 'https://picsum.photos/200?v=0004'},
-				{value: 'Item #5', src: 'https://picsum.photos/200?v=0005'},
-				{value: 'Item #6', src: 'https://picsum.photos/200?v=0006'},
+				{value: 'Item #1', src: 'https://picsum.photos/1000?v=0001'},
+				{value: 'Item #2', src: 'https://picsum.photos/1000?v=0002'},
+				{value: 'Item #3', src: 'https://picsum.photos/1000?v=0003'},
+				{value: 'Item #4', src: 'https://picsum.photos/1000?v=0004'},
+				{value: 'Item #5', src: 'https://picsum.photos/1000?v=0005'},
+				{value: 'Item #6', src: 'https://picsum.photos/1000?v=0006'},
 			],
 		}).on('change', (ev) => {
 			document.body.style.backgroundImage = `url(${ev.value.src})`;
