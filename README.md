@@ -38,10 +38,10 @@ const params = {
 pane.addInput(params, 'weave', {
   view: 'thumbnail-list',
   options: [
-    {value: 'plain', src: './plain.png'},
-    {value: 'twill', src: './twill.png'},
-    {value: 'basket', src: './basket.png'},
-    {value: 'herringbone', src: './herringbone.png'},
+    {value: 'plain', src: './plain.png', data: {...}},
+    {value: 'twill', src: './twill.png', data: {...}},
+    {value: 'basket', src: './basket.png', data: {...}},
+    {value: 'herringbone', src: './herringbone.png', data: {...}},
   ]
 }).on('change', (ev) => {
   console.log(ev.value);

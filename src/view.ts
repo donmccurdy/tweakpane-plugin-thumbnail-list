@@ -1,22 +1,22 @@
 import {ClassName, Value, View, ViewProps} from '@tweakpane/core';
 
-import type {Thumbnail} from './controller';
+import {Thumbnail} from './controller';
+
+const CHECKER_IMG_SRC = '__checker_img_src__';
 
 interface Config {
-	value: Value<Thumbnail>;
+	value: Value<Thumbnail | null>;
 	valueOptions: Thumbnail[];
 	viewProps: ViewProps;
 }
 
-// Create a class name generator from the view name
-// ClassName('tmp') will generate a CSS class name like `tp-tmpv`
 const className = ClassName('thumb');
 
 // Custom view class should implement `View` interface
 export class PluginView implements View {
 	public readonly element: HTMLElement;
 	private doc_: Document;
-	private value_: Value<Thumbnail>;
+	private value_: Value<Thumbnail | null>;
 	private valueOptions_: Thumbnail[];
 	private overlayEl_: HTMLElement;
 	private selectEl_: HTMLElement;
@@ -79,24 +79,32 @@ export class PluginView implements View {
 
 	private init_(): void {
 		const doc = this.element.ownerDocument;
-		for (const thumbnail of this.valueOptions_) {
+
+		const createOptionEl = (thumbnail: Thumbnail | null) => {
 			const thumbEl = doc.createElement('div');
 			thumbEl.classList.add(className('thmb'));
-			thumbEl.style.backgroundImage = `url(${thumbnail.src})`;
+			thumbEl.style.backgroundImage = thumbnail
+				? `url(${thumbnail.src})`
+				: `url(${CHECKER_IMG_SRC})`;
 
 			const labelEl = doc.createElement('span');
 			labelEl.classList.add(className('lbl'));
-			labelEl.textContent = thumbnail.value;
+			labelEl.textContent = thumbnail ? thumbnail.value : 'None';
 
 			const optionEl = doc.createElement('div');
 			optionEl.classList.add(className('opt'));
 			optionEl.appendChild(thumbEl);
 			optionEl.appendChild(labelEl);
-			optionEl.setAttribute('data-value', thumbnail.value);
+			optionEl.setAttribute('data-value', thumbnail ? thumbnail.value : '');
 			optionEl.addEventListener('click', this.onSelect_);
 
 			this.optionEls_.push(optionEl);
 			this.overlayEl_.appendChild(optionEl);
+		};
+
+		createOptionEl(null);
+		for (const thumbnail of this.valueOptions_) {
+			createOptionEl(thumbnail);
 		}
 	}
 
@@ -104,11 +112,17 @@ export class PluginView implements View {
 	private refresh_(): void {
 		const active = this.value_.rawValue;
 
-		this.selectThumbEl_.style.backgroundImage = `url(${active.src})`;
-		this.selectLabelEl_.textContent = active.value;
+		if (active) {
+			this.selectThumbEl_.style.backgroundImage = `url(${active.src})`;
+			this.selectLabelEl_.textContent = active.value;
+		} else {
+			this.selectThumbEl_.style.backgroundImage = `url(${CHECKER_IMG_SRC})`;
+			this.selectLabelEl_.textContent = 'None';
+		}
 
+		const activeValue = active ? active.value : '';
 		for (const optionEl of this.optionEls_) {
-			if (optionEl.getAttribute('data-value') === active.value) {
+			if (optionEl.getAttribute('data-value') === activeValue) {
 				optionEl.setAttribute('aria-selected', 'true');
 			} else {
 				optionEl.removeAttribute('aria-selected');
@@ -136,8 +150,7 @@ export class PluginView implements View {
 		const thumbnail = this.valueOptions_.find(
 			(option) => option.value === value,
 		);
-		if (!thumbnail) return;
-		this.value_.setRawValue(thumbnail);
+		this.value_.setRawValue(thumbnail || null);
 	}
 
 	/** Given a click event somewhere in an option, finds the nearest option element. */

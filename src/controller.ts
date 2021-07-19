@@ -3,7 +3,7 @@ import {Controller, Value, ViewProps} from '@tweakpane/core';
 import {PluginView} from './view';
 
 interface Config {
-	value: Value<Thumbnail>;
+	value: Value<Thumbnail | null>;
 	valueOptions: Thumbnail[];
 	viewProps: ViewProps;
 }
@@ -11,11 +11,12 @@ interface Config {
 export interface Thumbnail {
 	value: string;
 	src: string;
+	data?: unknown;
 }
 
 /** Thumbnail List Controller */
 export class PluginController implements Controller<PluginView> {
-	public readonly value: Value<Thumbnail>;
+	public readonly value: Value<Thumbnail | null>;
 	public readonly view: PluginView;
 	public readonly viewProps: ViewProps;
 

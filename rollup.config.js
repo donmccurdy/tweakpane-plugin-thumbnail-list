@@ -39,6 +39,8 @@ function getPlugins(css, shouldMinify) {
 		nodeResolve(),
 		Replace({
 			__css__: css,
+			__checker_img_src__:
+				'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA4klEQVR4Xu2awQ3EQAjEbjun9Ohq8ANZOP8JZDBstOL94DMzQ16xrX8k+b92+wNo/AyIAOgARXBbXwtAABqC2wjT+LVALQAdoAhu62sBCECnwDbCNH4tcL4FKEJ2/bN/AM0/A6iDdn0E2CtI848A6qBdHwH2CtL8I4A6aNdHgL2CNP8IoA7a9d0Inb8RygDoQDOgHaGWpNoSI2Nke4b0H0Cq155gi5JtirYfsD3FafxOgfOnAEXIru9KzF5Bmn8EUAft+giwV5DmHwHUQbs+AuwVpPlHAHXQro8AewVp/ucJ+AAX4sBQqPDC3AAAAABJRU5ErkJggg==',
 			preventAssignment: false,
 		}),
 	];

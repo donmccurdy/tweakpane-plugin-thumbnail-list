@@ -23,7 +23,7 @@ interface PluginInputParams extends BaseInputParams {
  * - P is the type of the parsed parameters
  */
 export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
-	Thumbnail,
+	Thumbnail | null,
 	string,
 	PluginInputParams
 > = {
@@ -41,6 +41,7 @@ export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
 				p.required.object({
 					value: p.required.string,
 					src: p.required.string,
+					data: p.optional.custom((d) => d),
 				}),
 			),
 		});
@@ -56,10 +57,10 @@ export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
 	binding: {
 		/** Converts an external unknown value into the internal value. */
 		reader(_args) {
-			return (exValue: unknown): Thumbnail => {
+			return (exValue: unknown): Thumbnail | null => {
 				return (
 					_args.params.options.find((option) => option.value === exValue) ||
-					_args.params.options[0]
+					null
 				);
 			};
 		},
