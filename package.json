@@ -14,6 +14,8 @@
   "scripts": {
     "prepare": "run-s clean build",
     "prepublishOnly": "npm test",
+    "preversion": "yarn build:prod",
+    "postversion": "git push && git push --tags && npm publish",
     "start": "npm run watch",
     "test": "eslint --ext .ts 'src/**/*.ts'",
     "assets": "run-s clean build assets:version assets:zip",
