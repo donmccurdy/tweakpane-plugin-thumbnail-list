@@ -52,7 +52,14 @@ Inherits CSS variables from [Tweakpane's theming system](https://cocopon.github.
 
 ```css
 :root {
-  --tp-plugin-thumbnail-list-size: 20px;
+  /** Max height of dropdown panel. */
+  --tp-plugin-thumbnail-list-height: 400px;
+
+  /** Fixed width of dropdown panel. */
+  --tp-plugin-thumbnail-list-width: 200px;
+
+  /** Width/height of (square) thumbnail. */
+  --tp-plugin-thumbnail-list-thumb-size: 20px;
 }
 ```
 

@@ -4,49 +4,129 @@
 // You can use CSS variables for styling. See declarations for details:
 // ../../node_modules/@tweakpane/core/lib/sass/common/_defs.scss
 
+/**
+ * Class Index
+ * - ovl: overlay
+ * - opt: overlay option
+ * - sel: inline selection
+ * - thmb: overlay thumbnail
+ * - sthmb: inline selection thumbnail
+ * - lbl: overlay label
+ * - slbl: inline selection label
+ */
 .#{$prefix}-thumbv {
 	@extend %input;
 
-	cursor: pointer;
-	height: calc(var(--bld-us) * 5);
-	overflow: hidden;
+	--tptl-thumb-size: var(--tp-plugin-thumbnail-list-thumb-size, var(--bld-us));
+
 	position: relative;
+	height: var(--bld-us);
+	cursor: pointer;
+
+	&, &:hover {
+		background: none;
+	}
 
 	&.#{$prefix}-v-disabled {
 		opacity: 0.5;
 	}
 
-	&_row {
+	/* Overlay */
+	&_ovl {
+		display: none;
+		position: absolute;
+		top: var(--bld-us);
+		right: 0;
+		overflow-x: hidden;
+		overflow-y: auto;
+		max-height: var(--tp-plugin-thumbnail-list-height, 400px);
+		width: var(--tp-plugin-thumbnail-list-width, 200px);
+		background: var(--bs-bg);
+		padding: var(--cnt-v-p) var(--cnt-h-p);
+		border-bottom-left-radius: var(--bs-br);
+		border-bottom-right-radius: var(--bs-br);
+
+		.#{$prefix}-thumbv_-active & {
+			display: block;
+		}
+	}
+
+	/* Option and Select */
+	&_opt,
+	&_sopt {
 		display: flex;
 		flex-direction: row;
-		height: var(--tp-plugin-thumbnail-list-size, var(--bld-us));
-		padding: var(--tp-container-vertical-padding, 4px) 0;
 		color: var(--in-fg);
-		font-size: 0.9em;
+	}
+
+	&_sopt {
+		height: var(--bld-us);
+	}
+
+	/* Option */
+	&_opt {
+		height: var(--tptl-thumb-size);
+		margin: 0 calc(-1 * var(--cnt-h-p));
+		padding: var(--cnt-v-p) var(--cnt-h-p) 0;
 		opacity: 0.75;
 
-		&[data-selected] {
+		&[aria-selected] {
 			opacity: 1.0;
 			background: var(--in-bg);
 		}
-
 
 		&:hover {
 			opacity: 1.0;
 		}
 	}
 
-	&_img {
-		width: var(--tp-plugin-thumbnail-list-size, var(--bld-us));
+	/* Image and Select Image */
+	&_thmb,
+	&_sthmb {
+		flex-shrink: 0;
+		width: var(--bld-us);
 		height: 100%;
-		border-radius: var(--tp-element-border-radius, 2px);
-		margin-right: 0.5em;
+		border-radius: var(--elm-br);
 		background-size: contain;
+		position: relative;
+	}
+
+	&_sthmb {
+		width: var(--bld-us);
+	}
+
+	&_thmb {
+		margin-right: 2em;
+		width: var(--tptl-thumb-size);
+	}
+
+	[aria-selected] &_thmb::after {
+		content: '✓';
+		position: absolute;
+		right: -1em;
+		font-size: 1.5em;
+		line-height: var(--tptl-thumb-size);
+	}
+
+	&_lbl,
+	&_slbl {
+		height: var(--bld-us);
+		line-height: var(--bld-us);
+		text-overflow: ellipsis;
+	}
+
+	&_slbl {
+		margin-left: 4px;
+		padding: 0 4px;
+		background-color: var(--in-bg);
+		border-radius: var(--elm-br);
+		box-sizing: border-box;
+		min-width: 0;
+		width: 100%;
 	}
 
 	&_lbl {
-		height: var(--tp-plugin-thumbnail-list-size, var(--bld-us));
-		line-height: var(--tp-plugin-thumbnail-list-size, var(--bld-us));
-		text-overflow: ellipsis;
+		height: var(--tptl-thumb-size);
+		line-height: var(--tptl-thumb-size);
 	}
 }

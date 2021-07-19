@@ -15,33 +15,64 @@ const className = ClassName('thumb');
 // Custom view class should implement `View` interface
 export class PluginView implements View {
 	public readonly element: HTMLElement;
+	private doc_: Document;
 	private value_: Value<Thumbnail>;
 	private valueOptions_: Thumbnail[];
-	private rowEls_: HTMLElement[] = [];
+	private overlayEl_: HTMLElement;
+	private selectEl_: HTMLElement;
+	private selectThumbEl_: HTMLElement;
+	private selectLabelEl_: HTMLElement;
+	private optionEls_: HTMLElement[] = [];
 
 	constructor(doc: Document, config: Config) {
 		this.onSelect_ = this.onSelect_.bind(this);
+		this.open_ = this.open_.bind(this);
+		this.close_ = this.close_.bind(this);
 
-		// Create a root element for the plugin
+		// DOM.
+
+		this.doc_ = doc;
+
 		this.element = doc.createElement('div');
 		this.element.classList.add(className());
-		// Bind view props to the element
+
+		this.selectEl_ = document.createElement('div');
+		this.selectEl_.classList.add(className('sopt'));
+		this.element.appendChild(this.selectEl_);
+
+		this.selectThumbEl_ = document.createElement('div');
+		this.selectThumbEl_.classList.add(className('sthmb'));
+		this.selectEl_.appendChild(this.selectThumbEl_);
+
+		this.selectLabelEl_ = document.createElement('span');
+		this.selectLabelEl_.classList.add(className('slbl'));
+		this.selectEl_.appendChild(this.selectLabelEl_);
+
+		this.overlayEl_ = doc.createElement('div');
+		this.overlayEl_.classList.add(className('ovl'));
+		this.element.appendChild(this.overlayEl_);
+
+		// Events.
+
+		this.selectEl_.addEventListener('click', this.open_);
+
 		config.viewProps.bindClassModifiers(this.element);
 
 		this.value_ = config.value;
 		this.value_.emitter.on('change', this.onValueChange_.bind(this));
 		this.valueOptions_ = config.valueOptions;
 
-		this.element.style.overflowY = 'auto';
-
 		this.init_();
 		this.refresh_();
 
 		config.viewProps.handleDispose(() => {
+			this.selectEl_.removeEventListener('click', this.open_);
+			this.doc_.removeEventListener('click', this.close_);
+
 			let rowEl;
-			while ((rowEl = this.rowEls_.pop())) {
+			while ((rowEl = this.optionEls_.pop())) {
 				rowEl.removeEventListener('click', this.onSelect_);
-				this.element.removeChild(rowEl);
+				this.overlayEl_.removeChild(rowEl);
 			}
 		});
 	}
@@ -50,39 +81,58 @@ export class PluginView implements View {
 		const doc = this.element.ownerDocument;
 		for (const thumbnail of this.valueOptions_) {
 			const thumbEl = doc.createElement('div');
-			thumbEl.classList.add(className('img'));
+			thumbEl.classList.add(className('thmb'));
 			thumbEl.style.backgroundImage = `url(${thumbnail.src})`;
 
 			const labelEl = doc.createElement('span');
 			labelEl.classList.add(className('lbl'));
 			labelEl.textContent = thumbnail.value;
 
-			const rowEl = doc.createElement('div');
-			rowEl.classList.add(className('row'));
-			rowEl.appendChild(thumbEl);
-			rowEl.appendChild(labelEl);
-			rowEl.setAttribute('data-value', thumbnail.value);
-			rowEl.addEventListener('click', this.onSelect_);
+			const optionEl = doc.createElement('div');
+			optionEl.classList.add(className('opt'));
+			optionEl.appendChild(thumbEl);
+			optionEl.appendChild(labelEl);
+			optionEl.setAttribute('data-value', thumbnail.value);
+			optionEl.addEventListener('click', this.onSelect_);
 
-			this.rowEls_.push(rowEl);
-			this.element.appendChild(rowEl);
+			this.optionEls_.push(optionEl);
+			this.overlayEl_.appendChild(optionEl);
 		}
 	}
 
+	/** Updates UI state after a value change. */
 	private refresh_(): void {
-		const value = this.value_.rawValue.value;
-		for (const rowEl of this.rowEls_) {
-			if (rowEl.getAttribute('data-value') === value) {
-				rowEl.setAttribute('data-selected', '');
+		const active = this.value_.rawValue;
+
+		this.selectThumbEl_.style.backgroundImage = `url(${active.src})`;
+		this.selectLabelEl_.textContent = active.value;
+
+		for (const optionEl of this.optionEls_) {
+			if (optionEl.getAttribute('data-value') === active.value) {
+				optionEl.setAttribute('aria-selected', 'true');
 			} else {
-				rowEl.removeAttribute('data-selected');
+				optionEl.removeAttribute('aria-selected');
 			}
 		}
 	}
 
+	/** Opens the overlay. */
+	private open_(event: MouseEvent) {
+		this.element.classList.add(className('-active'));
+		this.doc_.addEventListener('click', this.close_);
+		event.stopPropagation();
+	}
+
+	/** Closes the overlay. */
+	private close_() {
+		this.element.classList.remove(className('-active'));
+		this.doc_.removeEventListener('click', this.close_);
+	}
+
+	/** Selects the thumbnail element clicked. */
 	private onSelect_(event: MouseEvent) {
-		const rowEl = this.findRow_(event.target as HTMLElement);
-		const value = rowEl.getAttribute('data-value');
+		const optionEl = this.findOptionEl_(event.target as HTMLElement);
+		const value = optionEl.getAttribute('data-value');
 		const thumbnail = this.valueOptions_.find(
 			(option) => option.value === value,
 		);
@@ -90,7 +140,8 @@ export class PluginView implements View {
 		this.value_.setRawValue(thumbnail);
 	}
 
-	private findRow_(el: HTMLElement | null): HTMLElement {
+	/** Given a click event somewhere in an option, finds the nearest option element. */
+	private findOptionEl_(el: HTMLElement | null): HTMLElement {
 		while (el && !el.hasAttribute('data-value')) {
 			el = el.parentElement;
 		}
@@ -98,6 +149,7 @@ export class PluginView implements View {
 		return el;
 	}
 
+	/** Change handler. */
 	private onValueChange_() {
 		this.refresh_();
 	}

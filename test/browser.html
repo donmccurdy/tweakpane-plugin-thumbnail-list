@@ -5,7 +5,9 @@
 	<title></title>
 	<style>
 		body {
-			--tp-plugin-thumbnail-list-size: 30px;
+			--tp-plugin-thumbnail-list-height: 500px;
+			--tp-plugin-thumbnail-list-width: 200px;
+			--tp-plugin-thumbnail-list-thumb-size: 30px;
 		}
 	</style>
 </head>
@@ -14,12 +16,16 @@
 	<script src="../dist/tweakpane-plugin-thumbnail-list.js"></script>
 	<script>
 		const params = {
+			number: '0.5',
+			color: 0x4285F4,
 			image: 'value1',
 		};
 
 		const pane = new Tweakpane.Pane();
 		pane.registerPlugin(TweakpaneThumbnailListPlugin);
 
+		pane.addInput(params, 'number', {min: 0, max: 1});
+		pane.addInput(params, 'color', {view: 'color'});
 		pane.addInput(params, 'image', {
 			view: 'thumbnail-list',
 			options: [
