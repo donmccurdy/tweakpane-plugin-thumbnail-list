@@ -1,6 +1,6 @@
 {
   "name": "tweakpane-plugin-thumbnail-list",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Tweakpane plugin for image thumbnail selection",
   "main": "dist/tweakpane-plugin-thumbnail-list.js",
   "author": "Don McCurdy <dm@donmccurdy.com>",
