@@ -4,6 +4,8 @@
 
 > **NOTICE:** _IN DEVELOPMENT_. Not yet ready for use.
 
+![Preview](./assets/preview.png)
+
 ## Installation
 
 ### Browser
@@ -72,7 +74,7 @@ Inherits CSS variables from [Tweakpane's theming system](https://cocopon.github.
   ```
 - Build source codes and watch changes:
   ```
-  % npm start
+  % npm watch
   ```
 - Open `test/browser.html` to see the result.
 

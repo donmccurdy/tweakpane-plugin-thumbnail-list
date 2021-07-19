@@ -5,6 +5,7 @@
 	<title></title>
 	<style>
 		body {
+			background: #F1F2F3;
 			background-size: cover;
 			--tp-plugin-thumbnail-list-height: 500px;
 			--tp-plugin-thumbnail-list-width: 200px;
@@ -22,11 +23,11 @@
 			image: 'value1',
 		};
 
-		const pane = new Tweakpane.Pane();
+		const pane = new Tweakpane.Pane({title: 'Input bindings'});
 		pane.registerPlugin(TweakpaneThumbnailListPlugin);
 
-		pane.addInput(params, 'number', {min: 0, max: 1});
-		pane.addInput(params, 'color', {view: 'color'});
+		// pane.addInput(params, 'number', {min: 0, max: 1});
+		// pane.addInput(params, 'color', {view: 'color'});
 		pane.addInput(params, 'image', {
 			view: 'thumbnail-list',
 			options: [
