@@ -9,6 +9,7 @@ interface Config {
 }
 
 export interface Thumbnail {
+	text: string;
 	value: string;
 	src: string;
 	data?: unknown;

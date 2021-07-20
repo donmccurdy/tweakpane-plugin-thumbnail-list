@@ -32,21 +32,30 @@ pane.registerPlugin(TweakpaneThumbnailListPlugin);
 ## Usage
 ```js
 const params = {
-  weave: 'plain',
+  weave: 'p',
 };
 
 pane.addInput(params, 'weave', {
   view: 'thumbnail-list',
   options: [
-    {value: 'plain', src: './plain.png', data: {...}},
-    {value: 'twill', src: './twill.png', data: {...}},
-    {value: 'basket', src: './basket.png', data: {...}},
-    {value: 'herringbone', src: './herringbone.png', data: {...}},
+    {text: 'Plain', value: 'p', src: './plain.png', data: {...}},
+    {text: 'Twill', value: 't', src: './twill.png', data: {...}},
+    {text: 'Basket', value: 'b', src: './basket.png', data: {...}},
+    {text: 'Herringbone', value: 'h', src: './herringbone.png', data: {...}},
   ]
 }).on('change', (ev) => {
   console.log(ev.value);
 });
 ```
+
+### Option properties:
+
+| property | type   | required | description                    |
+|----------|--------|----------|--------------------------------|
+| text     | string | ✓        | Human-readable label.          |
+| value    | string | ✓        | Unique identifier.             |
+| src      | url    | ✓        | Preview URL.                   |
+| data     | any    |          | Any application-specific data. |
 
 ## CSS Theming
 
@@ -67,7 +76,7 @@ Inherits CSS variables from [Tweakpane's theming system](https://cocopon.github.
 
 ## Contributing
 
-### Quick start
+### Quickstart
 - Install dependencies:
   ```
   % npm install

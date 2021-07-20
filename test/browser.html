@@ -5,11 +5,20 @@
 	<title></title>
 	<style>
 		body {
-			background: #F1F2F3;
 			background-size: cover;
 			--tp-plugin-thumbnail-list-height: 500px;
 			--tp-plugin-thumbnail-list-width: 200px;
 			--tp-plugin-thumbnail-list-thumb-size: 30px;
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body {
+				background: #202020;
+				color: #FFFFFF;
+			}
+			a {
+				color: #FFFFFF;
+			}
 		}
 	</style>
 </head>
@@ -20,23 +29,23 @@
 		const params = {
 			number: '0.5',
 			color: 0x4285F4,
-			image: 'Item #1',
+			image: '001',
 		};
 
 		const pane = new Tweakpane.Pane({title: 'Input bindings'});
 		pane.registerPlugin(TweakpaneThumbnailListPlugin);
 
-		// pane.addInput(params, 'number', {min: 0, max: 1});
-		// pane.addInput(params, 'color', {view: 'color'});
+		pane.addInput(params, 'number', {min: 0, max: 1});
+		pane.addInput(params, 'color', {view: 'color'});
 		pane.addInput(params, 'image', {
 			view: 'thumbnail-list',
 			options: [
-				{value: 'Item #1', src: 'https://picsum.photos/600?v=0001'},
-				{value: 'Item #2', src: 'https://picsum.photos/600?v=0002'},
-				{value: 'Item #3', src: 'https://picsum.photos/600?v=0003'},
-				{value: 'Item #4', src: 'https://picsum.photos/600?v=0004'},
-				{value: 'Item #5', src: 'https://picsum.photos/600?v=0005'},
-				{value: 'Item #6', src: 'https://picsum.photos/600?v=0006'},
+				{text: 'Item #1', value: '001', src: 'https://picsum.photos/600?v=001'},
+				{text: 'Item #2', value: '002', src: 'https://picsum.photos/600?v=002'},
+				{text: 'Item #3', value: '003', src: 'https://picsum.photos/600?v=003'},
+				{text: 'Item #4', value: '004', src: 'https://picsum.photos/600?v=004'},
+				{text: 'Item #5', value: '005', src: 'https://picsum.photos/600?v=005'},
+				{text: 'Item #6', value: '006', src: 'https://picsum.photos/600?v=006'},
 			],
 		}).on('change', (ev) => {
 			const value = ev.value;

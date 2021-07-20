@@ -89,7 +89,7 @@ export class PluginView implements View {
 
 			const labelEl = doc.createElement('span');
 			labelEl.classList.add(className('lbl'));
-			labelEl.textContent = thumbnail ? thumbnail.value : 'None';
+			labelEl.textContent = thumbnail ? thumbnail.text : 'None';
 
 			const optionEl = doc.createElement('div');
 			optionEl.classList.add(className('opt'));
@@ -114,10 +114,10 @@ export class PluginView implements View {
 
 		if (active) {
 			this.selectThumbEl_.style.backgroundImage = `url(${active.src})`;
-			this.selectLabelEl_.textContent = active.value;
+			this.selectLabelEl_.textContent = active.text;
 		} else {
 			this.selectThumbEl_.style.backgroundImage = `url(${CHECKER_IMG_SRC})`;
-			this.selectLabelEl_.textContent = 'None';
+			this.selectLabelEl_.textContent = '';
 		}
 
 		const activeValue = active ? active.value : '';

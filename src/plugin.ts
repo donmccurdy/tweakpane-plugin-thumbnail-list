@@ -39,6 +39,7 @@ export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
 			view: p.required.constant('thumbnail-list'),
 			options: p.required.array(
 				p.required.object({
+					text: p.required.string,
 					value: p.required.string,
 					src: p.required.string,
 					data: p.optional.custom((d) => d),
