@@ -54,7 +54,7 @@ pane.addInput(params, 'weave', {
 |----------|--------|----------|--------------------------------|
 | text     | string | ✓        | Human-readable label.          |
 | value    | string | ✓        | Unique identifier.             |
-| src      | url    | ✓        | Preview URL.                   |
+| src      | url    | ✓        | Thumbnail URL.                 |
 | data     | any    |          | Any application-specific data. |
 
 ## CSS Theming
