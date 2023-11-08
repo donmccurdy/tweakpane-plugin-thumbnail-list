@@ -1,6 +1,6 @@
 import {ClassName, Value, View, ViewProps} from '@tweakpane/core';
 
-import {Thumbnail} from './controller';
+import {Thumbnail} from './controller.js';
 
 const CHECKER_IMG_SRC = '__checker_img_src__';
 

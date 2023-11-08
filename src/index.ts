@@ -1,3 +1,9 @@
-import {TweakpaneThumbnailListPlugin} from './plugin';
+import type {TpPlugin} from 'tweakpane';
 
-export const plugin = TweakpaneThumbnailListPlugin;
+import {TweakpaneThumbnailListPlugin} from './plugin.js';
+
+export const id = 'textarea';
+
+export const css = '__css__';
+
+export const plugins: TpPlugin[] = [TweakpaneThumbnailListPlugin];

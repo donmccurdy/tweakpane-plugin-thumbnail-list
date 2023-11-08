@@ -35,7 +35,7 @@ const params = {
   weave: 'p',
 };
 
-pane.addInput(params, 'weave', {
+pane.addBinding(params, 'weave', {
   view: 'thumbnail-list',
   options: [
     {text: 'Plain', value: 'p', src: './plain.png', data: {...}},

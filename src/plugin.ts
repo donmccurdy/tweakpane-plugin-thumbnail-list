@@ -2,12 +2,12 @@ import {
 	BaseInputParams,
 	BindingTarget,
 	CompositeConstraint,
+	createPlugin,
 	InputBindingPlugin,
-	ParamsParsers,
-	parseParams,
+	parseRecord,
 } from '@tweakpane/core';
 
-import {PluginController, Thumbnail} from './controller';
+import {PluginController, Thumbnail} from './controller.js';
 
 interface PluginInputParams extends BaseInputParams {
 	view: 'thumbnail-list';
@@ -26,16 +26,14 @@ export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
 	Thumbnail | null,
 	string,
 	PluginInputParams
-> = {
+> = createPlugin({
 	id: 'thumbnail-list',
 	type: 'input',
-	css: '__css__',
 
 	accept(exValue: unknown, params: Record<string, unknown>) {
 		if (typeof exValue !== 'string') return null;
 
-		const p = ParamsParsers;
-		const result = parseParams<PluginInputParams>(params, {
+		const result = parseRecord<PluginInputParams>(params, (p) => ({
 			view: p.required.constant('thumbnail-list'),
 			options: p.required.array(
 				p.required.object({
@@ -45,7 +43,7 @@ export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
 					data: p.optional.custom((d) => d),
 				}),
 			),
-		});
+		}));
 
 		if (!result) return null;
 
@@ -89,4 +87,4 @@ export const TweakpaneThumbnailListPlugin: InputBindingPlugin<
 			viewProps: args.viewProps,
 		});
 	},
-};
+});

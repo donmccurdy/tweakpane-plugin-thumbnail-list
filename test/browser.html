@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" />
 	<title></title>
 	<style>
 		body {
@@ -14,30 +14,31 @@
 		@media (prefers-color-scheme: dark) {
 			body {
 				background: #202020;
-				color: #FFFFFF;
+				color: #ffffff;
 			}
 			a {
-				color: #FFFFFF;
+				color: #ffffff;
 			}
 		}
 	</style>
 </head>
 <body>
-	<script src="../node_modules/tweakpane/dist/tweakpane.js"></script>
-	<script src="../dist/tweakpane-plugin-thumbnail-list.js"></script>
-	<script>
+	<script type="module">
+		import * as Tweakpane from '../node_modules/tweakpane/dist/tweakpane.js';
+		import * as TweakpaneThumbnailListPlugin from '../dist/tweakpane-plugin-thumbnail-list.js';
+
 		const params = {
 			number: '0.5',
-			color: 0x4285F4,
+			color: 0x4285f4,
 			image: '001',
 		};
 
 		const pane = new Tweakpane.Pane({title: 'Input bindings'});
 		pane.registerPlugin(TweakpaneThumbnailListPlugin);
 
-		pane.addInput(params, 'number', {min: 0, max: 1});
-		pane.addInput(params, 'color', {view: 'color'});
-		pane.addInput(params, 'image', {
+		pane.addBinding(params, 'number', {min: 0, max: 1});
+		pane.addBinding(params, 'color', {view: 'color'});
+		pane.addBinding(params, 'image', {
 			view: 'thumbnail-list',
 			options: [
 				{text: 'Item #1', value: '001', src: 'https://picsum.photos/600?v=001'},

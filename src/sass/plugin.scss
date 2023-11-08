@@ -1,5 +1,5 @@
 // Import core styles
-@import '../../node_modules/@tweakpane/core/lib/sass/plugin';
+@use '../../node_modules/@tweakpane/core/lib/sass/tp';
 
 // You can use CSS variables for styling. See declarations for details:
 // ../../node_modules/@tweakpane/core/lib/sass/common/_defs.scss
@@ -14,41 +14,45 @@
  * - lbl: overlay label
  * - slbl: inline selection label
  */
-.#{$prefix}-thumbv {
-	@extend %input;
+.#{tp.$prefix}-thumbv {
+	@extend %tp-input;
 
-	--tptl-thumb-size: var(--tp-plugin-thumbnail-list-thumb-size, var(--bld-us));
+	--tptl-thumb-size: var(
+		--tp-plugin-thumbnail-list-thumb-size,
+		tp.cssVar('container-unit-size')
+	);
 
 	position: relative;
-	height: var(--bld-us);
+	height: tp.cssVar('container-unit-size');
 	cursor: pointer;
 
-	&, &:hover {
+	&,
+	&:hover {
 		background: none;
 	}
 
-	&.#{$prefix}-v-disabled {
+	&.#{tp.$prefix}-v-disabled {
 		opacity: 0.5;
 	}
 
 	/* Overlay */
 	&_ovl {
 		z-index: 100;
-		box-shadow: 0 2px 4px var(--bs-sh);
+		box-shadow: 0 2px 4px tp.cssVar('base-shadow');
 		display: none;
 		position: absolute;
-		top: var(--bld-us);
+		top: tp.cssVar('container-unit-size');
 		right: 0;
 		overflow-x: hidden;
 		overflow-y: auto;
 		max-height: var(--tp-plugin-thumbnail-list-height, 400px);
 		width: var(--tp-plugin-thumbnail-list-width, 200px);
-		background: var(--bs-bg);
-		padding: var(--cnt-v-p) var(--cnt-h-p);
-		border-bottom-left-radius: var(--bs-br);
-		border-bottom-right-radius: var(--bs-br);
+		background: tp.cssVar('base-bg');
+		padding: tp.cssVar('container-v-padding') tp.cssVar('container-h-padding');
+		border-bottom-left-radius: tp.cssVar('base-border-radius');
+		border-bottom-right-radius: tp.cssVar('base-border-radius');
 
-		.#{$prefix}-thumbv_-active & {
+		.#{tp.$prefix}-thumbv_-active & {
 			display: block;
 		}
 	}
@@ -58,27 +62,27 @@
 	&_sopt {
 		display: flex;
 		flex-direction: row;
-		color: var(--in-fg);
+		color: tp.cssVar('input-fg');
 	}
 
 	&_sopt {
-		height: var(--bld-us);
+		height: tp.cssVar('container-unit-size');
 	}
 
 	/* Option */
 	&_opt {
 		height: var(--tptl-thumb-size);
-		margin: 0 calc(-1 * var(--cnt-h-p));
-		padding: var(--cnt-v-p) var(--cnt-h-p) 0;
+		margin: 0 calc(-1 * #{tp.cssVar('container-h-padding')});
+		padding: tp.cssVar('container-v-padding') tp.cssVar('container-h-padding') 0;
 		opacity: 0.75;
 
 		&[aria-selected] {
-			opacity: 1.0;
-			background: var(--in-bg);
+			opacity: 1;
+			background: tp.cssVar('input-bg');
 		}
 
 		&:hover {
-			opacity: 1.0;
+			opacity: 1;
 		}
 	}
 
@@ -86,15 +90,15 @@
 	&_thmb,
 	&_sthmb {
 		flex-shrink: 0;
-		width: var(--bld-us);
+		width: tp.cssVar('container-unit-size');
 		height: 100%;
-		border-radius: var(--elm-br);
+		border-radius: tp.cssVar('blade-border-radius');
 		background-size: contain;
 		position: relative;
 	}
 
 	&_sthmb {
-		width: var(--bld-us);
+		width: tp.cssVar('container-unit-size');
 	}
 
 	&_thmb {
@@ -112,16 +116,16 @@
 
 	&_lbl,
 	&_slbl {
-		height: var(--bld-us);
-		line-height: var(--bld-us);
+		height: tp.cssVar('container-unit-size');
+		line-height: tp.cssVar('container-unit-size');
 		text-overflow: ellipsis;
 	}
 
 	&_slbl {
 		margin-left: 4px;
 		padding: 0 4px;
-		background-color: var(--in-bg);
-		border-radius: var(--elm-br);
+		background-color: tp.cssVar('input-bg');
+		border-radius: tp.cssVar('blade-border-radius');
 		box-sizing: border-box;
 		min-width: 0;
 		width: 100%;
