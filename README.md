@@ -2,8 +2,6 @@
 
 [Tweakpane][tweakpane] plugin for selecting from a thumbnail list.
 
-> **EXPERIMENTAL:**. API is likely to change before stable release.
-
 ![Preview](https://github.com/donmccurdy/tweakpane-plugin-thumbnail-list/raw/main/assets/preview.png)
 
 ## Installation
